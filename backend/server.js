@@ -7,6 +7,10 @@ const User = require('./src/models/User');
 const Store = require('./src/models/Store');
 const Rating = require('./src/models/Rating');
 
+//Setup relationships
+Store.belongsTo(User, { foreignKey: 'owner_id', as: 'owner' });
+User.hasMany(Store, { foreignKey: 'owner_id' });
+
 dotenv.config();
 
 const app = express();
@@ -15,6 +19,9 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', require('./src/routes/authRoutes'));
+app.use('/api/admin', require('./src/routes/adminRoutes'));
+app.use('/api/user', require('./src/routes/userRoutes'));
+app.use('/api/owner', require('./src/routes/ownerRoutes'));
 
 sequelize.sync({ alter: true }).then(() => {
     console.log("Database synced");

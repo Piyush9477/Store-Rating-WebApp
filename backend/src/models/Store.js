@@ -17,6 +17,4 @@ const Store = sequelize.define('Store', {
     }
 });
 
-Store.belongsTo(User, { foreignKey: 'owner_id', as: 'owner' });
-
 module.exports = Store;
