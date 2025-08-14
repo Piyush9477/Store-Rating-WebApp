@@ -4,18 +4,33 @@ const User = require('../models/User');
 
 exports.getStoreRatings = async (req, res) => {
     try {
-        const store = await Store.findOne({ where: { owner_id: req.user.id }, include: [{ model: Rating, include: [User] }] });
-        if (!store) return res.status(404).json({ msg: "Store not found" });
+        const stores = await Store.findAll({
+            where: { owner_id: req.user.id },
+            include: [{ model: Rating, include: [User] }]
+        });
 
-        const ratings = store.Ratings.map(r => ({
-            userName: r.User.name,
-            rating: r.rating
-        }));
+        if (!stores.length) return res.status(404).json({ msg: "No stores found" });
 
-        const avgRating = ratings.length ? (ratings.reduce((a, b) => a + b.rating, 0) / ratings.length).toFixed(2) : null;
+        const result = stores.map(store => {
+            const ratings = store.Ratings.map(r => ({
+                userName: r.User.name,
+                rating: r.rating
+            }));
 
-        res.json({ storeName: store.name, averageRating: avgRating, ratings });
+            const avgRating = ratings.length
+                ? (ratings.reduce((sum, r) => sum + r.rating, 0) / ratings.length).toFixed(2)
+                : null;
+
+            return {
+                storeName: store.name,
+                averageRating: avgRating,
+                ratings
+            };
+        });
+
+        res.json(result);
     } catch (err) {
         res.status(500).json({ msg: err.message });
     }
 };
+
