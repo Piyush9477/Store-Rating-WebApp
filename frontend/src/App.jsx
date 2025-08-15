@@ -7,19 +7,35 @@ import AdminDashboard from './pages/AdminDashboard';
 import UserDashboard from './pages/UserDashboard';
 import OwnerDashboard from './pages/OwnerDashboard';
 import ChangePassword from './pages/ChangePassword';
+import AddUserPage from './pages/AddUserPage';
+import AddStorePage from './pages/AddStorePage';
+import Home from './pages/Home';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
 
           <Route path="/admin" element={
             <ProtectedRoute allowedRoles={['admin']}>
               <AdminDashboard />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/admin/add-user" element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <AddUserPage />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/admin/add-store" element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <AddStorePage />
             </ProtectedRoute>
           } />
 

@@ -24,13 +24,47 @@ export default function Login() {
     };
 
     return (
-        <div className="container mt-5">
-            <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
-                <input name="email" value={form.email} onChange={handleChange} placeholder="Email" className="form-control mb-2" />
-                <input name="password" type="password" value={form.password} onChange={handleChange} placeholder="Password" className="form-control mb-2" />
-                <button className="btn btn-primary">Login</button>
-            </form>
+        <div className="d-flex align-items-center justify-content-center min-vh-100 bg-light">
+            <div className="card shadow-lg p-4" style={{ maxWidth: "400px", width: "100%", borderRadius: "15px" }}>
+                <h2 className="text-center mb-4 fw-bold">Welcome Back</h2>
+                <form onSubmit={handleSubmit}>
+                <div className="mb-3">
+                    <label htmlFor="email" className="form-label">Email Address</label>
+                    <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    className="form-control form-control-lg"
+                    placeholder="Enter your email"
+                    required
+                    />
+                </div>
+
+                <div className="mb-4">
+                    <label htmlFor="password" className="form-label">Password</label>
+                    <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    value={form.password}
+                    onChange={handleChange}
+                    className="form-control form-control-lg"
+                    placeholder="Enter your password"
+                    required
+                    />
+                </div>
+
+                <button className="btn btn-primary btn-lg w-100">Login</button>
+
+                <div className="text-center mt-3">
+                    <small className="text-muted">
+                    Don't have an account? <a href="/signup">Sign up</a>
+                    </small>
+                </div>
+                </form>
+            </div>
         </div>
     );
 }
